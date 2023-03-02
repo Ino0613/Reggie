@@ -123,6 +123,66 @@ public class Test {
             }
             System.out.println();
         }
+
+        /*
+            n!的阶乘
+         */
+        int n = 3;
+
+
+        int i1 = 1;
+
+        for (int i = 1; i <= n; i++) {
+            i1 *= i;
+        }
+        System.out.println("n的阶乘："+ i1);
+        int jiecheng = jiecheng(4);
+        System.out.println(jiecheng);
+
+        //若求从1！到n！
+        int a1 = 4;
+        int sum = 0;
+        int fact = 1;
+        for (int i = 1; i <= a1; i++) {
+            fact*=i;
+            sum+=fact;
+        }
+        System.out.println("1!~ "+ a1 + "!的和为: "+ sum);
+        System.out.println(sumNum(100));
+    }
+
+    public static int jiecheng(int n) {
+        if (n == 1) {
+            return n;
+        }else
+            return n*jiecheng(n-1);
+    }
+
+
+    public static int factorialSum(int n) {
+        if (n == 1) {
+            return 1;
+        }
+        return factorial(n) + factorialSum(n - 1);
+    }
+
+    public static int factorial(int n) {
+        int res = 1;
+        for (int i = 1; i <= n; i++) {
+            res *= i;
+        }
+        return res;
+    }
+
+    public static int sumNum(int n) {
+        int sum = 0;
+        for (int i = 1; i <= n; i++) {
+            if (i % 2 == 0) {
+                continue;
+            }
+            sum+=i;
+        }
+        return sum;
     }
 
 
