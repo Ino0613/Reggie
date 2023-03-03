@@ -97,8 +97,21 @@ public class DishController {
 //        return R.success("修改成功！");
 //    }
 
+//    @GetMapping("/list")
+//    public R<List<Dish>> listDish(Dish dish) {
+//        Long categoryId = dish.getCategoryId();
+//        LambdaQueryWrapper<Dish> lqw = new LambdaQueryWrapper<>();
+//        lqw.eq(categoryId != null, Dish::getCategoryId, categoryId);
+//        //查询状态为1
+//        lqw.eq(Dish::getStatus, 1);
+//        //添加排序条件
+//        lqw.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
+//        List<Dish> list = dishService.list(lqw);
+//        return R.success(list);
+//    }
+
     @GetMapping("/list")
-    public R<List<Dish>> listDish(Dish dish) {
+    public R<List<DishDto>> listDish(Dish dish) {
         Long categoryId = dish.getCategoryId();
         LambdaQueryWrapper<Dish> lqw = new LambdaQueryWrapper<>();
         lqw.eq(categoryId != null, Dish::getCategoryId, categoryId);
@@ -107,7 +120,29 @@ public class DishController {
         //添加排序条件
         lqw.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
         List<Dish> list = dishService.list(lqw);
-        return R.success(list);
+
+        List<DishDto> dishDtosList = list.stream().map((item)->{
+            DishDto dishDto = new DishDto();
+            BeanUtils.copyProperties(item, dishDto);
+            Long categoryId1 = item.getCategoryId();
+
+            Category category = categoryService.getById(categoryId1);
+
+            if (category != null) {
+                String name = category.getName();
+                dishDto.setCategoryName(name);
+            }
+
+            //当前菜品的id
+            Long dishId = item.getId();
+            LambdaQueryWrapper<DishFlavor> QueryWrapper = new LambdaQueryWrapper<>();
+            QueryWrapper.eq(DishFlavor::getDishId, dishId);
+            List<DishFlavor> dishFlavors = dishFlavorService.list(QueryWrapper);
+            dishDto.setFlavors(dishFlavors);
+            return dishDto;
+        }).collect(Collectors.toList());
+
+        return R.success(dishDtosList);
     }
 
     @PostMapping

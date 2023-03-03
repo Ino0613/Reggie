@@ -151,4 +151,20 @@ public class SetmealController {
         setmealService.updateWithDish(setmealDto);
         return R.success("更新成功！");
     }
+
+    /**
+     * 根据条件查询套餐数据
+     * @param setmeal
+     * @return
+     */
+    @GetMapping("/list")
+    public R<List<Setmeal>> list(Setmeal setmeal) {
+        LambdaQueryWrapper<Setmeal> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(setmeal.getCategoryId() != null, Setmeal::getCategoryId, setmeal.getCategoryId());
+        lqw.eq(Setmeal::getStatus, setmeal.getStatus());
+        lqw.orderByDesc(Setmeal::getUpdateTime);
+        List<Setmeal> setmealList = setmealService.list(lqw);
+
+        return R.success(setmealList);
+    }
 }
