@@ -1,0 +1,53 @@
+<!-- 文件上传表单 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="../../plugins/element-ui/index.css" />
+    <link rel="stylesheet" href="../../styles/common.css" />
+    <link rel="stylesheet" href="../../styles/page.css" />
+</head>
+<body>
+<form method="post" action="/upload" enctype="multipart/form-data">
+    <input type="file" name="file">
+    <button type="submit">上传</button>
+</form>
+
+<!-- 在线编辑器 -->
+<div id="editor"></div>
+
+<!-- 引入编辑器库 -->
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script>
+    // 实例化编辑器
+    var quill = new Quill('#editor', {
+        modules: {
+            toolbar: '#toolbar'
+        },
+        theme: 'snow'
+    });
+
+    // 上传文档并转换为HTML格式
+    var form = document.querySelector('form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        var formData = new FormData(form);
+
+        fetch('/convert', {
+            method: 'POST',
+            body: formData
+        })
+            .then(function(response) {
+                return response.text();
+            })
+            .then(function(html) {
+                // 将转换后的HTML代码设置为编辑器的内容
+                quill.root.innerHTML = html;
+            });
+    });
+</script>
+</body>

@@ -96,66 +96,100 @@ public class Test {
 //        } while (guess != num);
 //        System.out.println("恭喜你猜对了，数字为: " + guess);
 
-        for (int i = 200; i <= 300; i++) {
-            int bai = i / 100;
-            int shi = i / 10 % 10;
-            int ge = i % 10;
-            if (ge + shi + bai == 12) {
-                if (ge * shi * bai == 42) {
-                    System.out.println(i);
+//        for (int i = 200; i <= 300; i++) {
+//            int bai = i / 100;
+//            int shi = i / 10 % 10;
+//            int ge = i % 10;
+//            if (ge + shi + bai == 12) {
+//                if (ge * shi * bai == 42) {
+//                    System.out.println(i);
+//                }
+//            }
+//        }
+//
+//        for (int i = 0; i < 4; i++) {
+//            System.out.println("****");
+//        }
+//        for (int i = 0; i < 5; i++) {
+//            for (int j = 0; j < i; j++) {
+//                System.out.print("*");
+//            }
+//            System.out.println();
+//        }
+//
+//        for (int i = 1; i <= 3; i++) {
+//            for (int j = 1; j <= i; j++) {
+//                System.out.print(i + "*" + j + "=" + i * j + " ");
+//            }
+//            System.out.println();
+//        }
+//
+//        /*
+//            n!的阶乘
+//         */
+//        int n = 3;
+//
+//
+//        int i1 = 1;
+//
+//        for (int i = 1; i <= n; i++) {
+//            i1 *= i;
+//        }
+//        System.out.println("n的阶乘："+ i1);
+//        int jiecheng = jiecheng(4);
+//        System.out.println(jiecheng);
+//
+//        //若求从1！到n！
+//        int a1 = 4;
+//        int sum = 0;
+//        int fact = 1;
+//        for (int i = 1; i <= a1; i++) {
+//            fact*=i;
+//            sum+=fact;
+//        }
+//        System.out.println("1!~ "+ a1 + "!的和为: "+ sum);
+//        System.out.println(sumNum(100));
+        int[] nums = new int[]{40, 8, 15, 18, 12};
+        int temp;
+        int leng = nums.length;
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < leng - 1; i++) {
+
+            for (int j = 0; j < leng - i - 1; j++) {
+                if (nums[j] > nums[j + 1]) {
+
+                    temp = nums[j + 1];
+                    nums[j + 1] = nums[j];
+                    nums[j] = temp;
+                    long end = System.currentTimeMillis();
+                    System.out.println(Arrays.toString(nums) + "时间：" + (end-start));
                 }
             }
         }
-
-        for (int i = 0; i < 4; i++) {
-            System.out.println("****");
-        }
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < i; j++) {
-                System.out.print("*");
+        int[] num = new int[]{43, 8, 15, 18, 12};
+        Arrays.sort(num);
+        System.out.println(Arrays.toString(num));
+        int a = 10;
+        int index=0;
+        for (int i = 0; i < nums.length; i++) {
+            if (a > nums[i]) {
+                index = i;
             }
-            System.out.println();
         }
-
-        for (int i = 1; i <= 3; i++) {
-            for (int j = 1; j <= i; j++) {
-                System.out.print(i + "*" + j + "=" + i * j + " ");
-            }
-            System.out.println();
-        }
-
-        /*
-            n!的阶乘
-         */
-        int n = 3;
-
-
-        int i1 = 1;
-
-        for (int i = 1; i <= n; i++) {
-            i1 *= i;
-        }
-        System.out.println("n的阶乘："+ i1);
-        int jiecheng = jiecheng(4);
-        System.out.println(jiecheng);
-
-        //若求从1！到n！
-        int a1 = 4;
-        int sum = 0;
-        int fact = 1;
-        for (int i = 1; i <= a1; i++) {
-            fact*=i;
-            sum+=fact;
-        }
-        System.out.println("1!~ "+ a1 + "!的和为: "+ sum);
-        System.out.println(sumNum(100));
+        System.out.println(index);
+        int[] b = new int[num.length + 1];
+        System.arraycopy(num, 0, b, 0, index+1);
+        System.out.println(Arrays.toString(b));
+        b[index+1] = a;
+        System.arraycopy(num,index+1,b,index+2,num.length-index-1);
+        System.out.println(Arrays.toString(b));
     }
 
     public static int jiecheng(int n) {
         if (n == 1) {
             return n;
-        }else
-            return n*jiecheng(n-1);
+        } else
+            return n * jiecheng(n - 1);
     }
 
 
@@ -180,7 +214,7 @@ public class Test {
             if (i % 2 == 0) {
                 continue;
             }
-            sum+=i;
+            sum += i;
         }
         return sum;
     }
