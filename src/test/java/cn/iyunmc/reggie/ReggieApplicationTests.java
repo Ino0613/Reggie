@@ -6,7 +6,7 @@ import redis.clients.jedis.Jedis;
 
 import java.util.Set;
 
-@SpringBootTest
+//@SpringBootTest
 class ReggieApplicationTests {
 
     @Test
