@@ -2,6 +2,7 @@ package cn.iyunmc.reggie.common;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +12,7 @@ import java.util.Map;
  * @param <T>
  */
 @Data
-public class R<T> {
+public class R<T> implements Serializable {
 
     //编码： 1 成功 0或其他 失败
     private Integer code;
